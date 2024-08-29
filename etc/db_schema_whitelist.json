@@ -1,0 +1,12 @@
+{
+    "node_npm_version": {
+        "column": {
+            "entity_id": true,
+            "version": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}
