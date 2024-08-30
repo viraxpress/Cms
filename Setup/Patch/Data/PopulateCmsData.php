@@ -116,7 +116,7 @@ class PopulateCmsData implements DataPatchInterface, PatchRevertableInterface
     public function apply()
     {
         $this->moduleDataSetup->startSetup();
-        $filePath = BP . "/app/code/ViraXpress/Frontend/cms/home.html";
+        $filePath = BP . "/vendor/viraxpress/frontend/cms/home.html";
 
         //Create header static block
         $cmsBlockData = [
