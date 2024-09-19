@@ -36,7 +36,6 @@ use Magento\Framework\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem\Io\File;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\FileSystemException;
 
 class PopulateCmsData implements DataPatchInterface, PatchRevertableInterface
 {
@@ -116,7 +115,6 @@ class PopulateCmsData implements DataPatchInterface, PatchRevertableInterface
     public function apply()
     {
         $this->moduleDataSetup->startSetup();
-        $filePath = BP . "/vendor/viraxpress/frontend/cms/home.html";
 
         //Create header static block
         $cmsBlockData = [
@@ -307,12 +305,7 @@ class PopulateCmsData implements DataPatchInterface, PatchRevertableInterface
             </div>
             '
         ];
-        $newBlock = $this->blockFactory->create();
-        $newBlock->setData($cmsBlockData);
-        $newBlock->save();
-        $content1 = $this->file->read($filePath);
-        $modifiedContent1 = str_replace("viraxpress_blogs", $newBlock->getId(), $content1);
-        $this->file->write($filePath, $modifiedContent1);
+        $this->blockFactory->create()->setData($cmsBlockData)->save();
 
         $cmsBlockData = [
             'title' => 'ViraXpress - Event promotion 1',
@@ -346,12 +339,7 @@ class PopulateCmsData implements DataPatchInterface, PatchRevertableInterface
             </div>
             '
         ];
-        $newBlock = $this->blockFactory->create();
-        $newBlock->setData($cmsBlockData);
-        $newBlock->save();
-        $content2 = $this->file->read($filePath);
-        $modifiedContent2 = str_replace("viraxpress-event-promotion-1", $newBlock->getId(), $content2);
-        $this->file->write($filePath, $modifiedContent2);
+        $this->blockFactory->create()->setData($cmsBlockData)->save();
 
         $cmsBlockData = [
             'title' => 'ViraXpress - Event promotion 2',
@@ -385,12 +373,7 @@ class PopulateCmsData implements DataPatchInterface, PatchRevertableInterface
             </div>
             '
         ];
-        $newBlock = $this->blockFactory->create();
-        $newBlock->setData($cmsBlockData);
-        $newBlock->save();
-        $content3 = $this->file->read($filePath);
-        $modifiedContent3 = str_replace("viraxpress-event-promotion-2", $newBlock->getId(), $content3);
-        $this->file->write($filePath, $modifiedContent3);
+        $this->blockFactory->create()->setData($cmsBlockData)->save();
 
         $cmsBlockData = [
             'title' => 'ViraXpress - Event promotion 3',
@@ -424,12 +407,7 @@ class PopulateCmsData implements DataPatchInterface, PatchRevertableInterface
             </div>
             '
         ];
-        $newBlock = $this->blockFactory->create();
-        $newBlock->setData($cmsBlockData);
-        $newBlock->save();
-        $content4 = $this->file->read($filePath);
-        $modifiedContent4 = str_replace("viraxpress-event-promotion-3", $newBlock->getId(), $content4);
-        $this->file->write($filePath, $modifiedContent4);
+        $this->blockFactory->create()->setData($cmsBlockData)->save();
 
         $cmsBlockData = [
             'title' => 'ViraXpress - Our Story Video',
@@ -447,12 +425,9 @@ class PopulateCmsData implements DataPatchInterface, PatchRevertableInterface
             </div>
             '
         ];
-        $newBlock = $this->blockFactory->create();
-        $newBlock->setData($cmsBlockData);
-        $newBlock->save();
-        $content5 = $this->file->read($filePath);
-        $modifiedContent5 = str_replace("viraxpress-our-story-video", $newBlock->getId(), $content5);
-        $this->file->write($filePath, $modifiedContent5);
+        $this->blockFactory->create()->setData($cmsBlockData)->save();
+
+        $filePath = BP . '/app/code/ViraXpress/Frontend/cms/home.html';
 
         // Create static home page
         if (file_exists($filePath)) {
