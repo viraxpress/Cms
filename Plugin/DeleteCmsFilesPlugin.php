@@ -143,8 +143,8 @@ class DeleteCmsFilesPlugin
             if (!empty($nodePath)) {
                 $newEnvPath = $this->getCurrentEnvPath() . ":$nodePath";
                 $npmCommand = "sh " . $this->directory->getRoot() . "/pub/vx/{$themeCode}/web/tailwind/run_script.sh";
+                putenv('PATH=' . getenv('PATH') . ':' . $nodePath);
                 $result = $this->shell->execute($npmCommand, [], ['PATH' => $newEnvPath]);
-                // $output = shell_exec($npmCommand . ' 2>&1');
             }
         }
     }
@@ -156,6 +156,6 @@ class DeleteCmsFilesPlugin
      */
     private function getCurrentEnvPath(): string
     {
-        return getenv('PATH') ?: '';
+        return getenv('PATH') ?: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin';
     }
 }
