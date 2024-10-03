@@ -27,6 +27,7 @@ use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Block extends Template
 {
@@ -37,14 +38,21 @@ class Block extends Template
     private $scopeConfig;
 
     /**
+     * @var StoreManagerInterface
+     */
+    private $storeManager;
+
+    /**
      * @param Context $context
      * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         Context $context,
-        ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig,
+        StoreManagerInterface $storeManager
     ) {
         $this->scopeConfig = $scopeConfig;
+        $this->storeManager = $storeManager;
         parent::__construct($context);
     }
 
@@ -59,6 +67,22 @@ class Block extends Template
         return $this->scopeConfig->getValue(
             $configPath,
             ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    /**
+     * Get config value based on store id.
+     *
+     * @param string $configPath
+     * @return mixed
+     */
+    public function getConfigByStoreId($configPath)
+    {
+        $storeId = $this->storeManager->getStore()->getId();
+        return $this->scopeConfig->getValue(
+            $configPath,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
         );
     }
 }
