@@ -155,13 +155,14 @@ class SaveCmsPageObserver implements ObserverInterface
                 $nodePath = $this->scopeConfig->getValue('viraxpress_config/general/server_npm_node_path');
                 if (!empty($nodePath)) {
                     $storeIds = $object->getStoreId();
-                    $storeId = $observer->getEvent()->getStore();
-                    $themeCode = $this->dataHelper->checkThemePathByStoreId($storeId);
-                    if ($themeCode) {
-                        $newEnvPath = $this->getCurrentEnvPath() . ":$nodePath";
-                        $npmCommand = "sh " . $this->directory->getRoot() . "/pub/vx/{$themeCode}/web/tailwind/run_script.sh";
-                        putenv('PATH=' . getenv('PATH') . ':' . $nodePath);
-                        $result = $this->shell->execute($npmCommand, [], ['PATH' => $newEnvPath]);
+                    foreach ($storeIds as $storeId) {
+                        $themeCode = $this->dataHelper->checkThemePathByStoreId($storeId);
+                        if ($themeCode) {
+                            $newEnvPath = $this->getCurrentEnvPath() . ":$nodePath";
+                            $npmCommand = "sh " . $this->directory->getRoot() . "/pub/vx/{$themeCode}/web/tailwind/run_script.sh";
+                            putenv('PATH=' . getenv('PATH') . ':' . $nodePath);
+                            $result = $this->shell->execute($npmCommand, [], ['PATH' => $newEnvPath]);
+                        }
                     }
 
                     $nodeVersion = $this->nodeVersionFactory->create();
