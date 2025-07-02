@@ -463,8 +463,8 @@ class PopulateCmsData implements DataPatchInterface, PatchRevertableInterface
             ];
 
             $page = $this->pageFactory->create()->setData($pageData)->save();
+            $this->configWriter->save('web/default/cms_home_page', $page->getIdentifier());
         }
-        $this->configWriter->save('web/default/cms_home_page', $page->getIdentifier());
         $type = 'block';
         $blockDirectoryPath = $this->directory->getPath('media') . DIRECTORY_SEPARATOR . 'cms' . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR;
 

@@ -45,6 +45,7 @@ class Block extends Template
     /**
      * @param Context $context
      * @param ScopeConfigInterface $scopeConfig
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
         Context $context,
